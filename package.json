@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rimraf dist && npx tsc && yarn copy",
     "start": "node dist/app.js",
-    "dev": "ts-node-dev  --respawn --transpile-only --exit-child  --ignore-watch src/storage   src/app.ts | pino-pretty --translateTime",
+    "dev": "ts-node-dev  --respawn --transpile-only --exit-child  --ignore-watch src/storage   src/app.ts | pino-pretty -t='SYS:ddd mmm dd yyyy h:MM:ss TT'",
     "copy": "cp -r ./src/storage ./dist/ && cp -r ./src/public ./dist/ && cp -r ./src/views ./dist/ && cp -r ./src/locales ./dist/",
     "seed": "ts-node prisma/seed.ts",
     "make": "plop",
