@@ -1,9 +1,8 @@
-import joi, { ObjectSchema } from "joi";
+import { object, string, ref } from "yup";
 
-export const ResetPasswordRequest: ObjectSchema = joi.object({
-  password: joi.string().required(),
-  confirm_password: joi
-    .string()
+export const ResetPasswordRequest = object({
+  password: string().required(),
+  confirm_password: string()
     .required()
-    .valid(joi.ref("password"), "confirm password and password must be same"),
+    .oneOf([ref("password")], "confirm password and password must be same"),
 });

@@ -1,6 +1,6 @@
-import joi, { ObjectSchema } from "joi";
+import { object, string } from "yup";
 
-export const UpdateDeviceRequest: ObjectSchema = joi.object({
-  fcmToken: joi.string(),
-  metaData: joi.object(),
+export const UpdateDeviceRequest = object({
+  fcmToken: string(),
+  metaData: object(),
 });

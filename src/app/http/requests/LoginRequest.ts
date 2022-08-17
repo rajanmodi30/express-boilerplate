@@ -1,13 +1,10 @@
 import { Devices } from "@prisma/client";
-import joi, { ObjectSchema } from "joi";
+import { object, string } from "yup";
 
-export const LoginRequest: ObjectSchema = joi.object({
-  email: joi.string().required().email(),
-  password: joi.string().required(),
-  deviceType: joi
-    .string()
-    .valid(...Object.values(Devices))
-    .required(),
-  metaData: joi.object(),
-  fcmToken: joi.string(),
+export const LoginRequest = object({
+  email: string().required().email(),
+  password: string().required(),
+  deviceType: string().oneOf(Object.values(Devices)).required(),
+  metaData: object(),
+  fcmToken: string(),
 });

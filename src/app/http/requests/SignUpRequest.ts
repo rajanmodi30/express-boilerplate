@@ -1,19 +1,15 @@
 import { Devices } from "@prisma/client";
-import joi, { ObjectSchema } from "joi";
+import { object, ref, string } from "yup";
 
-export const SignUpRequest: ObjectSchema = joi.object({
-  firstName: joi.string().required(),
-  lastName: joi.string().required(),
-  email: joi.string().required().email(),
-  password: joi.string().required(),
-  confirm_password: joi
-    .string()
+export const SignUpRequest = object({
+  firstName: string().required(),
+  lastName: string().required(),
+  email: string().required().email(),
+  password: string().required(),
+  confirm_password: string()
     .required()
-    .valid(joi.ref("password"), "confirm password and password must be same"),
-  deviceType: joi
-    .string()
-    .valid(...Object.values(Devices))
-    .required(),
-  metaData: joi.object(),
-  fcmToken: joi.string(),
+    .oneOf([ref("password")], "confirm password and password must be same"),
+  deviceType: string().oneOf(Object.values(Devices)).required(),
+  metaData: object(),
+  fcmToken: string(),
 });

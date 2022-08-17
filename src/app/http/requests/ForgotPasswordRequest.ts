@@ -1,5 +1,5 @@
-import joi, { ObjectSchema } from "joi";
+import { object, string } from "yup";
 
-export const ForgotPasswordRequest: ObjectSchema = joi.object({
-  email: joi.string().required().email(),
+export const ForgotPasswordRequest = object({
+  email: string().required().email(),
 });
