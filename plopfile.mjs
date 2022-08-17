@@ -1,11 +1,15 @@
 export default function (plop) {
-  /* welcome messag that will display in CLI */
+  /* welcome message that will display in CLI */
   plop.setWelcomeMessage(
     "Welcome to plop! What type of file would you like to generate?"
   );
 
   plop.setHelper("actualName", function (fullNameWithPath) {
     return fullNameWithPath.data.root.name.split("/").pop();
+  });
+  plop.setHelper("camelCaseActualName", function (fullNameWithPath) {
+    const name = fullNameWithPath.data.root.name.split("/").pop();
+    return name.charAt(0).toLowerCase() + name.slice(1);
   });
 
   plop.setGenerator("controller", {
@@ -172,6 +176,33 @@ export default function (plop) {
           path: `src/app/providers/queues.ts`,
           pattern: /(\/\/ADD ADAPTERS HERE)/g,
           template: " new BullMQAdapter({{actualName}}Queue), \n$1",
+        },
+      ];
+
+      return actions;
+    },
+  });
+
+  plop.setGenerator("mail", {
+    description: "create an email template",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "template name:",
+      },
+    ],
+    actions: function (data) {
+      const actions = [
+        {
+          type: "add",
+          path: "src/app/mails/{{name}}.ts",
+          templateFile: "cli-templates/mail.hbs",
+        },
+        {
+          type: "add",
+          path: "src/views/email/{{camelCaseActualName}}.hbs",
+          templateFile: "cli-templates/mail_view.hbs",
         },
       ];
 
