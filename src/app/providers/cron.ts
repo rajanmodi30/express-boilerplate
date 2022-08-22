@@ -1,5 +1,5 @@
 import { CronJob } from "cron";
-import { CronEnums } from "../../types/enums";
+import { CronEnums } from "../../utils/types";
 import { helloWorld } from "../commands/helloWorld";
 //IMPORT CRON HERE
 export class cron {

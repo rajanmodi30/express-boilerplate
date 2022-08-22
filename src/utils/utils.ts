@@ -1,5 +1,10 @@
-import dbConnection from "../app/providers/db";
 import { env } from "../env";
+import {
+  ALLOWED_FILE_TYPES,
+  ALLOWED_IMAGE_TYPE,
+  ALLOWED_VIDEO_TYPE,
+  UPLOAD_TYPES,
+} from "./types";
 
 export const queueConnection = {
   connection: {
@@ -21,18 +26,19 @@ export const pagination = (
   };
 };
 
-export const averageUptimeCalculator = async (operationId: number) => {
-  const downCount = await dbConnection.log.count({
-    where: {
-      down: true,
-    },
-  });
-
-  const upCount = await dbConnection.log.count({
-    where: {
-      down: false,
-    },
-  });
-
-  return (upCount / (downCount + upCount)) * 100;
+export const randomPasswordGenerator = () => {
+  return Math.random().toString(36).slice(-8);
 };
+
+export const validFileTypes = (type: UPLOAD_TYPES) => {
+  if (type === UPLOAD_TYPES.IMAGE) {
+    return ALLOWED_IMAGE_TYPE;
+  } else if (type === UPLOAD_TYPES.VIDEO) {
+    return ALLOWED_VIDEO_TYPE;
+  } else if (type === UPLOAD_TYPES.FILE) {
+    return ALLOWED_FILE_TYPES;
+  }
+  return [];
+};
+
+export const STORAGE_PATH = env.app.root_dir + "/storage/uploads";

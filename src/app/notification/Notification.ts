@@ -1,10 +1,10 @@
 import { NotificationTypes } from "@prisma/client";
 import { MessagingPayload } from "firebase-admin/lib/messaging/messaging-api";
-import { PushNotificationChannels } from "../../types/enums";
+import { PushNotificationChannels } from "../../utils/types";
 import dbConnection from "../providers/db";
 import { defaultMailSendQueue } from "../jobs/DefaultMailSend";
 import { sendPushNotificationQueue } from "../jobs/PushNotificationSend";
-import { sendPushNotificationType } from "../../types/queues";
+import { sendPushNotificationType } from "../../utils/types";
 
 export class Notification {
   public channels: PushNotificationChannels[];

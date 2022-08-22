@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { BaseResponse } from "../../../../../types/response/base.response";
 import { DeviceService } from "../../../../services/DeviceService";
 import { LoginService } from "../../../../services/LoginService";
 import { SignUpService } from "../../../../services/SignUpService";

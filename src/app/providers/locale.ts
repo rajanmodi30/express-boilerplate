@@ -4,7 +4,7 @@ import Backend from "i18next-fs-backend";
 import { env } from "../../env";
 
 export class Locale {
-  initializeLocales(rootDirectory: string) {
+  initializeLocales() {
     i18next
       .use(middleware.LanguageDetector)
       .use(Backend)
@@ -16,8 +16,8 @@ export class Locale {
         nonExplicitSupportedLngs: false,
         // debug: env.node !== "production" ? true : false,
         backend: {
-          loadPath: rootDirectory + "/locales/{{lng}}/{{ns}}.json",
-          addPath: rootDirectory + "/locales/{{lng}}/{{ns}}.missing.json",
+          loadPath: env.app.root_dir + "/locales/{{lng}}/{{ns}}.json",
+          addPath: env.app.root_dir + "/locales/{{lng}}/{{ns}}.missing.json",
         },
         fallbackLng: "en",
       });

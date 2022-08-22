@@ -6,15 +6,21 @@ dotenv.config();
  * Environment variables
  */
 export const env = {
-  node: process.env.APP_ENV || "development",
+  node: getOsEnv("APP_ENV"),
   app: {
     name: getOsEnv("APP_NAME"),
     host: getOsEnv("APP_URL"),
+    debug:
+      getOsEnv("APP_ENV") !== "production"
+        ? toBool(getOsEnv("APP_DEBUG"))
+        : false,
     port: normalizePort(process.env.PORT || getOsEnv("APP_PORT")),
     api_only: toBool(getOsEnv("API_ONLY")),
     api_prefix: getOsEnv("API_PREFIX"),
     pagination_limit: toNumber(getOsEnv("PAGINATION_LIMIT")),
     api_rate_limit: toNumber(getOsEnv("API_RATE_LIMIT")),
+    root_dir: getOsEnv("APP_ENV") === "production" ? "dist" : "src",
+    user_uploaded_content_path: getOsEnv("USER_UPLOADED_CONTENT_PATH"),
   },
   auth: {
     secret: getOsEnv("JWT_SECRET"),

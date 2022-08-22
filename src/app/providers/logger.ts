@@ -1,4 +1,5 @@
 import { pino } from "pino";
+import { env } from "../../env";
 
 const levels = {
   debug: 10,
@@ -7,12 +8,12 @@ const levels = {
   error: 50,
 };
 
-const streams = (currentDirectory: string) => {
+const streams = () => {
   const storageStreams = Object.keys(levels).map((level) => {
     return {
-      // level: level,
+      level: level,
       stream: pino.destination(
-        `${currentDirectory}/storage/logs/app-${level}.log`
+        `${env.app.root_dir}/storage/logs/app-${level}.log`
       ),
     };
   });
@@ -27,11 +28,15 @@ const streams = (currentDirectory: string) => {
   return [...storageStreams, ...consoleStreams];
 };
 
+// const transport = pino.transport({
+//   target: "pino/file",
+//   options: { destination: "/path/to/file", level: "info" },
+// });
 export const logger = pino(
   {
     level: process.env.PINO_LOG_LEVEL || "info",
     customLevels: levels,
     useOnlyCustomLevels: true,
   },
-  pino.multistream(streams("src"))
+  pino.multistream(streams())
 );

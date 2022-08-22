@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "../../app/http/controllers/api/Auth/AuthController";
-import RequestValidator from "../../app/http/middleware/RequestValidator";
+import { RequestValidator } from "../../app/http/middleware/RequestValidator";
 import { LoginRequest } from "../../app/http/requests/LoginRequest";
 import { SignUpRequest } from "../../app/http/requests/SignUpRequest";
 import { verifyResetToken, verifyToken } from "../../app/http/middleware/Auth";

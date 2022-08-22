@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { DeviceController } from "../../app/http/controllers/api/Device/DeviceController";
-import RequestValidator from "../../app/http/middleware/RequestValidator";
+import { RequestValidator } from "../../app/http/middleware/RequestValidator";
 import { UpdateDeviceRequest } from "../../app/http/requests/UpdateDeviceRequest";
 
 const router = Router();

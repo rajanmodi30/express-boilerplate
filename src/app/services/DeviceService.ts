@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 import dbConnection from "../providers/db";
 import { Device, Devices, NotificationTypes } from "@prisma/client";
 import { Notification } from "../notification/Notification";
-import { PushNotificationChannels } from "../../types/enums";
+import { PushNotificationChannels } from "../../utils/types";
 
 export class DeviceService {
   public static async create(
@@ -49,7 +49,7 @@ export class DeviceService {
         id: deviceId,
       },
     });
-    
+
     if (device?.fcmToken) {
       const payload = {};
       await new Notification(

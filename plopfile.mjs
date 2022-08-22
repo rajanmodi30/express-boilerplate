@@ -98,11 +98,6 @@ export default function (plop) {
         message: "route name:",
       },
       {
-        type: "input",
-        name: "prefix",
-        message: "router prefix:",
-      },
-      {
         name: "input",
         name: "requiresAuth",
         message: "requires auth:",
@@ -131,7 +126,8 @@ export default function (plop) {
           type: "modify",
           path: `src/routes/${toImportIntoFile}/${toImportIntoFile}.ts`,
           pattern: /(\/\/ROUTERS USE ADD HERE)/g,
-          template: "router.use('/{{prefix}}  ', {{actualName}}Router);\n$1",
+          template:
+            "router.use('/{{actualName}}  ', {{actualName}}Router);\n$1",
         });
       } else {
         actions.push({
@@ -139,7 +135,7 @@ export default function (plop) {
           path: `src/routes/${toImportIntoFile}/${toImportIntoFile}.ts`,
           pattern: /(\/\/ROUTERS USE ADD HERE)/g,
           template:
-            "router.use('/{{prefix}}',verifyToken,{{actualName}}Router);\n$1",
+            "router.use('/{{actualName}}',verifyToken,{{actualName}}Router);\n$1",
         });
       }
 

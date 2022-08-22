@@ -31,7 +31,9 @@ dbConnection.$use(async (params, next) => {
   const after = Date.now();
 
   logger.info(
-    `Query ${params.model}.${params.action} took ${after - before}ms`
+    `Query ${params.model}.${params.action} took ${after - before}ms
+    Query params : ${JSON.stringify(params.args)}
+    `
   );
 
   return result;

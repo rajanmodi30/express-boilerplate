@@ -17,7 +17,7 @@ export class Server {
    *  runs the server
    */
   async start() {
-    await this.server.listen(env.app.port);
+    this.server.listen(env.app.port);
     this.logger.info("Server Listening on port:" + env.app.port);
     this.server.on("error", this.onError);
   }

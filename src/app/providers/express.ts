@@ -9,6 +9,11 @@ import pinoHttp from "pino-http";
 import { env } from "../../env";
 import rateLimit from "express-rate-limit";
 import { logger } from "./logger";
+import bodyParser from "body-parser";
+import {
+  ExceptionHandler,
+  NotFoundHandler,
+} from "../http/middleware/ExceptionHandler";
 export class Express {
   app: Application;
   logger: Logger;
@@ -21,8 +26,12 @@ export class Express {
   initializeApp = () => {
     const port = process.env.APP_PORT;
     this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(express.static("public"));
+    this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.use(express.static(env.app.root_dir + "/public"));
+    this.app.use(
+      env.app.user_uploaded_content_path,
+      express.static(env.app.root_dir + "/storage/uploads/")
+    );
     this.app.use(helmet());
     this.app.use(compression());
     this.app.disable("x-powered-by");
@@ -36,14 +45,13 @@ export class Express {
     this.app.set("port", port);
   };
 
-  configureViews = (currentDirectory: any, serverAdapter: any) => {
+  configureViews = (serverAdapter: any) => {
+    this.app.set("view engine", "hbs");
+    this.app.set("views", env.app.root_dir + "/views");
     if (!env.app.api_only) {
-      this.app.set("views", currentDirectory + "/views");
       this.app.use("/", webRouter);
     }
     this.app.use(`/${env.app.api_prefix}`, apiRouter);
-    this.app.set("view engine", "hbs");
-
     this.app.use("/queues", serverAdapter.getRouter());
   };
 
@@ -52,7 +60,7 @@ export class Express {
   };
 
   configureLogger = () => {
-    // this.app.use(pinoHttp({ logger: this.logger }));
+    this.app.use(pinoHttp({ logger: this.logger }));
   };
 
   configureRateLimiter = async () => {
@@ -67,13 +75,8 @@ export class Express {
     );
   };
 
-  errorHandler: ErrorRequestHandler = (err, req, res) => {
-    res.locals.message = err;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
-
-    // render the error page
-    this.logger?.error(err);
-    res.status(err.status || 500);
-    res.render("error");
+  configureExceptionHandler = () => {
+    this.app.use(NotFoundHandler);
+    this.app.use(ExceptionHandler);
   };
 }
