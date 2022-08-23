@@ -8,7 +8,7 @@ const levels = {
   error: 50,
 };
 
-const streams = () => {
+const streams: any = () => {
   const storageStreams = Object.keys(levels).map((level) => {
     return {
       level: level,
@@ -28,13 +28,9 @@ const streams = () => {
   return [...storageStreams, ...consoleStreams];
 };
 
-// const transport = pino.transport({
-//   target: "pino/file",
-//   options: { destination: "/path/to/file", level: "info" },
-// });
 export const logger = pino(
   {
-    level: process.env.PINO_LOG_LEVEL || "info",
+    level: "info",
     customLevels: levels,
     useOnlyCustomLevels: true,
   },
