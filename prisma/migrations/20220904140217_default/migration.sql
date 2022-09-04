@@ -8,6 +8,7 @@ CREATE TABLE `users` (
     `forgotPasswordToken` VARCHAR(191) NULL,
     `socialId` VARCHAR(191) NULL,
     `socialType` ENUM('GOOGLE', 'APPLE') NULL,
+    `status` ENUM('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'ACTIVE',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `deletedAt` DATETIME(3) NULL,
