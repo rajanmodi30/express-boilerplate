@@ -44,7 +44,7 @@ Install on production
  - [Bull Mq & board - for queues](https://www.npmjs.com/package/bullmq)
  - [Cron](https://www.npmjs.com/package/cron)
  - [i18next -localization](https://www.npmjs.com/package/i18next)
- - [Joi- Request Validation](https://www.npmjs.com/package/joi)
+ - [Yup- Request Validation](https://www.npmjs.com/package/yup)
  - [Redis](https://www.npmjs.com/package/redis)
  - [Express Rate Limiter](https://www.npmjs.com/package/express-rate-limit)
  - [PRISMA - ORM](https://www.npmjs.com/package/prisma)
