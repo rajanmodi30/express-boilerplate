@@ -1,14 +1,12 @@
-import express, { Application, ErrorRequestHandler } from "express";
+import express, { Application } from "express";
+import "express-async-errors";
 import helmet from "helmet";
 import compression from "compression";
 import errorhandler from "errorhandler";
 import apiRouter from "../../routes/api/api";
 import webRouter from "../../routes/web/web";
-import { Logger } from "pino";
-import pinoHttp from "pino-http";
 import { env } from "../../env";
 import rateLimit from "express-rate-limit";
-import { logger } from "./logger";
 import bodyParser from "body-parser";
 import {
   ExceptionHandler,
@@ -16,11 +14,9 @@ import {
 } from "../http/middleware/ExceptionHandler";
 export class Express {
   app: Application;
-  logger: Logger;
 
   constructor() {
     this.app = express();
-    this.logger = logger;
   }
 
   initializeApp = () => {
@@ -57,10 +53,6 @@ export class Express {
 
   configureLocale = (middleware: any, i18next: any) => {
     this.app.use(middleware.handle(i18next));
-  };
-
-  configureLogger = () => {
-    this.app.use(pinoHttp({ logger: this.logger }));
   };
 
   configureRateLimiter = async () => {

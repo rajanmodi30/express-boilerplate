@@ -30,9 +30,17 @@ const streams: any = () => {
 
 export const logger = pino(
   {
-    level: "info",
+    level: process.env.PINO_LOG_LEVEL || "info",
     customLevels: levels,
     useOnlyCustomLevels: true,
+    formatters: {
+      level: (label) => {
+        return { level: label };
+      },
+    },
   },
-  pino.multistream(streams())
+  pino.multistream(streams(), {
+    levels,
+    dedupe: true,
+  })
 );

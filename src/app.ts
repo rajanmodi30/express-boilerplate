@@ -4,7 +4,6 @@ import { Locale } from "./app/providers/locale";
 import { cron } from "./app/providers/cron";
 import { Server } from "./app/providers/server";
 import { Express } from "./app/providers/express";
-import { ExceptionHandler } from "./app/http/middleware/ExceptionHandler";
 
 const express = new Express();
 const locale = new Locale();
@@ -12,7 +11,6 @@ const { middleware, i18next } = locale.initializeLocales();
 
 Promise.all([
   express.initializeApp(),
-  express.configureLogger(),
   express.configureRateLimiter(),
   express.configureLocale(middleware, i18next),
   express.configureViews(serverAdapter),
@@ -21,7 +19,6 @@ Promise.all([
   const app = express.app;
   const httpServer = new Server(app);
   httpServer.start();
-  app.use(ExceptionHandler);
   cron.setup();
 });
 
