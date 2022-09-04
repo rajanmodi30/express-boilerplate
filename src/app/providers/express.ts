@@ -43,7 +43,7 @@ export class Express {
 
   configureViews = (serverAdapter: any) => {
     this.app.set("view engine", "hbs");
-    this.app.set("views", env.app.root_dir + "/views");
+    this.app.set("views", env.app.root_dir + "/views/");
     if (!env.app.api_only) {
       this.app.use("/", webRouter);
     }

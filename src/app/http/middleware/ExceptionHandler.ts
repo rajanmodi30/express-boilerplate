@@ -12,7 +12,7 @@ export const NotFoundHandler = (req: Request, res: Response) => {
       message: "Not found",
     });
   }
-  res.render("404");
+  res.render("errors/404");
 };
 
 /**
@@ -32,5 +32,5 @@ export const ExceptionHandler = (
       message: "Something broke!",
     });
   }
-  res.render("500");
+  res.render("errors/500");
 };
