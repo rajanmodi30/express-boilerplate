@@ -60,4 +60,7 @@ export const env = {
       clientId: getOsEnv("APPLE_CLIENT_ID"),
     },
   },
+  cors: {
+    urls: getOsEnv("CORS_AVAILABLE_LINKS").split(","),
+  },
 };

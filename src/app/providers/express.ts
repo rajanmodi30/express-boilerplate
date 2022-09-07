@@ -12,6 +12,8 @@ import {
   ExceptionHandler,
   NotFoundHandler,
 } from "../http/middleware/ExceptionHandler";
+import cors from "cors";
+
 export class Express {
   app: Application;
 
@@ -21,6 +23,12 @@ export class Express {
 
   initializeApp = () => {
     const port = process.env.APP_PORT;
+    this.app.use(
+      cors({
+        origin: env.cors.urls,
+        methods: ["GET", "HEAD", "OPTIONS", "POST", "PUT", "DELETE"],
+      })
+    );
     this.app.use(express.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(express.static(env.app.root_dir + "/public"));
