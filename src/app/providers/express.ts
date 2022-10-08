@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request } from "express";
 import "express-async-errors";
 import helmet from "helmet";
 import compression from "compression";
@@ -64,15 +64,28 @@ export class Express {
   };
 
   configureRateLimiter = async () => {
-    this.app.use(
-      rateLimit({
-        // Rate limiter configuration
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: env.app.api_rate_limit, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-        standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-        legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-      })
-    );
+    if (env.app.api_rate_limit > 0) {
+      this.app.use(
+        rateLimit({
+          // Rate limiter configuration
+          skip: (request: Request) => {
+            const urlArray = request.originalUrl.split("/");
+            if (
+              urlArray.length > 2 &&
+              urlArray[1] === "queues" &&
+              urlArray[2] === "api"
+            ) {
+              return true;
+            }
+            return false;
+          },
+          windowMs: 15 * 60 * 1000, // 15 minutes
+          max: env.app.api_rate_limit, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+          standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+          legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+        })
+      );
+    }
   };
 
   configureExceptionHandler = () => {
