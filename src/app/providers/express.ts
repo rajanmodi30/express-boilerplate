@@ -2,7 +2,6 @@ import express, { Application, Request } from "express";
 import "express-async-errors";
 import helmet from "helmet";
 import compression from "compression";
-import errorhandler from "errorhandler";
 import apiRouter from "../../routes/api/api";
 import webRouter from "../../routes/web/web";
 import { env } from "../../env";
@@ -39,11 +38,6 @@ export class Express {
     this.app.use(helmet());
     this.app.use(compression());
     this.app.disable("x-powered-by");
-
-    if (process.env.NODE_ENV !== "production") {
-      // only use in development
-      this.app.use(errorhandler());
-    }
 
     // error handler
     this.app.set("port", port);
