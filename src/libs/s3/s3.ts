@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import { env } from "../../env";
 
 export class S3 {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -9,20 +10,26 @@ export class S3 {
     ContentType: string
   ): Promise<any> {
     AWS.config.update({
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      accessKeyId: env.aws.accessKey,
+      secretAccessKey: env.aws.secretAccessKey,
     });
 
     const s3 = new AWS.S3({
       signatureVersion: "v4",
+      region: env.aws.region,
     });
 
     const url = await s3.getSignedUrl("putObject", {
-      Bucket: process.env.S3_BUCKET,
+      Bucket: env.aws.bucket,
       Key: key,
-      Expires: Number(process.env.S3_SIGNED_URL_EXPIRE_SECONDS),
+      Expires: Number(1000),
       ContentType: ContentType,
+      ACL: "public-read",
     });
-    return { key: `${process.env.S3_BASE_URL}/${key}`, url: url };
+
+    return {
+      key: ` https://${env.aws.bucket}.s3.${env.aws.region}.amazonaws.com/${key}`,
+      url: url,
+    };
   }
 }
