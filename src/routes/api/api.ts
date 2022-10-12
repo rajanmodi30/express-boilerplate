@@ -17,15 +17,4 @@ router.use("/devices", verifyToken, devicesRouter);
 router.use("/notifications", verifyToken, NotificationRouter);
 
 //ROUTERS USE ADD HERE
-
-/**
- * 404 api redirects
- */
-router.use(function (req: Request, res: Response) {
-  res.status(404).send({
-    status: false,
-    message: "Not found",
-  });
-});
-
 export default router;
