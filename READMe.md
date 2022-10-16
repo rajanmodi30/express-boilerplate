@@ -34,6 +34,14 @@ Install on production
 - Notifications
 - Logout
 
+
+## Auto Generate Code
+
+Generate controller,routes,request,response,mail and jobs with command
+
+```bash
+  yarn make 
+```
 ## Libraries Used
 
  - [Pino - Logger](https://www.npmjs.com/package/pino)
