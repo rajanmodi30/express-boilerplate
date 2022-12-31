@@ -16,13 +16,13 @@ const transporter = nodemailer.createTransport(options);
 transporter.use(
   "compile",
   hbs({
-    viewPath: "src/views/email",
+    viewPath: `${env.app.root_dir}/views/email`,
     extName: ".hbs",
     viewEngine: {
       extname: ".hbs", // handlebars extension
-      layoutsDir: "src/views/email/", // location of handlebars templates
+      layoutsDir: `${env.app.root_dir}/views/email/`, // location of handlebars templates
       defaultLayout: "layout", // name of main template
-      partialsDir: "src/views/email/", // location of your subtemplates aka. header, footer etc
+      partialsDir: `${env.app.root_dir}/views/email/`, // location of your subtemplates aka. header, footer etc
     },
   })
 );
