@@ -7,6 +7,7 @@ import { AnyObjectSchema, object, string } from "yup";
  * has a valid shape, else return 400 Bad Request
  * @param {*} resourceSchema is a yup schema
  */
+//TODO fix all the methods here from yup to zod
 export const RequestValidator =
   (resourceSchema: AnyObjectSchema) =>
   async (req: Request, res: Response, next: NextFunction) => {
