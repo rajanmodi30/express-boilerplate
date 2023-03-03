@@ -52,7 +52,7 @@ Generate controller,routes,request,response,mail and jobs with command
  - [Bull Mq & board - for queues](https://www.npmjs.com/package/bullmq)
  - [Cron](https://www.npmjs.com/package/cron)
  - [i18next -localization](https://www.npmjs.com/package/i18next)
- - [Yup- Request Validation](https://www.npmjs.com/package/yup)
+ - [Zod- Request Validation](https://github.com/colinhacks/zod)
  - [Redis](https://www.npmjs.com/package/redis)
  - [Express Rate Limiter](https://www.npmjs.com/package/express-rate-limit)
  - [PRISMA - ORM](https://www.npmjs.com/package/prisma)
