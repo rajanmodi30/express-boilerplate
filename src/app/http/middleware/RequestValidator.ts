@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { unlinkSync } from "fs";
-import { AnyZodObject, object, string, ZodError } from "zod";
+import { AnyZodObject, object, string, ZodEffects, ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import { logger } from "../../providers/logger";
 
@@ -10,7 +10,7 @@ import { logger } from "../../providers/logger";
  * @param {*} resourceSchema is a yup schema
  */
 export const RequestValidator =
-  (resourceSchema: AnyZodObject) =>
+  (resourceSchema: ZodEffects<AnyZodObject> | AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const value = await resourceSchema.parseAsync(req.body);
@@ -35,7 +35,7 @@ export const RequestValidator =
  * @returns
  */
 export const RequestQueryValidator =
-  (resourceSchema: AnyZodObject) =>
+  (resourceSchema: ZodEffects<AnyZodObject> | AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     // throws an error if not valid
     try {
