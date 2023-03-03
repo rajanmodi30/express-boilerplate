@@ -1,5 +1,7 @@
-import { object, string } from "yup";
+import { object, string,z } from "zod";
 
 export const {{actualName}} = object({
-  name: string().required(),
+  name: string(),
 });
+
+export type {{actualName}} = z.infer<typeof {{actualName}}>

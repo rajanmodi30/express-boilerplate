@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { unlinkSync } from "fs";
-import { AnyObjectSchema, object, string } from "yup";
+import { AnyZodObject, object, string, ZodEffects, ZodError } from "zod";
+import { fromZodError } from "zod-validation-error";
+import { logger } from "../../providers/logger";
 
 /**
  * Validate that a resource being POSTed or PUT
@@ -8,13 +10,10 @@ import { AnyObjectSchema, object, string } from "yup";
  * @param {*} resourceSchema is a yup schema
  */
 export const RequestValidator =
-  (resourceSchema: AnyObjectSchema) =>
+  (resourceSchema: ZodEffects<AnyZodObject> | AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const value = await resourceSchema.validateSync(req.body, {
-        abortEarly: false,
-        stripUnknown: true,
-      });
+      const value = await resourceSchema.parseAsync(req.body);
       req.body.validatedData = value;
       next();
     } catch (error: any) {
@@ -23,7 +22,7 @@ export const RequestValidator =
       }
       const response = {
         status: false,
-        message: `Errors: ${error.errors}`,
+        message: errorCleaner(error),
       };
       res.status(400).json(response);
     }
@@ -36,20 +35,17 @@ export const RequestValidator =
  * @returns
  */
 export const RequestQueryValidator =
-  (resourceSchema: AnyObjectSchema) =>
+  (resourceSchema: ZodEffects<AnyZodObject> | AnyZodObject) =>
   async (req: Request, res: Response, next: NextFunction) => {
     // throws an error if not valid
     try {
-      const value = await resourceSchema.validateSync(req.query, {
-        abortEarly: false,
-        stripUnknown: true,
-      });
+      const value = await resourceSchema.parseAsync(req.query);
       req.body.validatedQueryData = value;
       next();
     } catch (error: any) {
       const response = {
         status: false,
-        message: `Errors: ${error.errors}`,
+        message: errorCleaner(error),
       };
       res.status(400).json(response);
     }
@@ -64,14 +60,15 @@ export const RequestSortValidator =
   (names: any[]) => async (req: Request, res: Response, next: NextFunction) => {
     try {
       const resourceSchema = object({
-        sortBy: string().oneOf(names).optional(),
-        sortType: string().oneOf(["asc", "desc"]).optional(),
+        sortBy: string()
+          .refine((value) => names.includes(value), "")
+          .optional(),
+        sortType: string()
+          .refine((value) => ["asc", "desc"].includes(value), "")
+          .optional(),
       });
 
-      const value = resourceSchema.validateSync(req.query, {
-        abortEarly: false,
-        stripUnknown: true,
-      });
+      const value = await resourceSchema.parseAsync(req.query);
 
       if (value.sortType === undefined) {
         value.sortType = "asc";
@@ -82,8 +79,22 @@ export const RequestSortValidator =
     } catch (error: any) {
       const response = {
         status: false,
-        message: `Errors: ${error.errors}`,
+        message: errorCleaner(error),
       };
       res.status(400).json(response);
     }
   };
+
+const errorCleaner = (errors: any) => {
+  logger.error(`zod error in schema ${JSON.stringify(errors.issues)}`);
+  let message;
+  if (errors instanceof ZodError) {
+    message = fromZodError(errors).message;
+    // message = errors.errors.map((error) => error.).toString();
+  } else {
+    message = errors?.message || "OOPS something went wrong";
+  }
+
+  console.log("message", JSON.stringify(message));
+  return message;
+};

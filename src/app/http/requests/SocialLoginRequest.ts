@@ -1,13 +1,15 @@
 import { Devices, SocialTypes } from "@prisma/client";
-import { object, string } from "yup";
+import { nativeEnum, object, string, z } from "zod";
 
 export const SocialLoginRequest = object({
-  firstName: string().required(),
-  lastName: string().required(),
-  socialId: string().required(),
-  socialType: string().required().oneOf(Object.values(SocialTypes)),
-  socialToken: string().required(),
-  deviceType: string().oneOf(Object.values(Devices)).required(),
-  metaData: object(),
+  firstName: string(),
+  lastName: string(),
+  socialId: string(),
+  socialType: nativeEnum(SocialTypes),
+  socialToken: string(),
+  deviceType: nativeEnum(Devices),
+  metaData: object({}).optional(),
   fcmToken: string(),
 });
+
+export type SocialLoginRequest = z.infer<typeof SocialLoginRequest>;

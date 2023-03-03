@@ -17,5 +17,11 @@ export const users = async (count: number) => {
   for (let i = 0; i < count; i++) {
     USERS.push(await createUser());
   }
+  USERS.push({
+    firstName: "rajan",
+    lastName: "mode",
+    email: "rajanmodi30@gmail.com",
+    password: bcrypt.hashSync("12345678"),
+  });
   return USERS;
 };

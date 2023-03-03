@@ -1,10 +1,12 @@
 import { Devices } from "@prisma/client";
-import { object, string } from "yup";
+import { nativeEnum, object, string, z } from "zod";
 
 export const LoginRequest = object({
-  email: string().required().email(),
-  password: string().required(),
-  deviceType: string().oneOf(Object.values(Devices)).required(),
-  metaData: object(),
-  fcmToken: string(),
+  email: string().email(),
+  password: string(),
+  deviceType: nativeEnum(Devices),
+  metaData: object({}).optional(),
+  fcmToken: string().optional(),
 });
+
+export type LoginRequest = z.infer<typeof LoginRequest>;
