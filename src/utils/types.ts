@@ -1,3 +1,4 @@
+import { Message } from "@aws-sdk/client-sqs";
 import { MessagingPayload } from "firebase-admin/lib/messaging/messaging-api";
 
 export enum PushNotificationChannels {
@@ -60,3 +61,16 @@ export const ALLOWED_IMAGE_TYPE = [
 export const ALLOWED_VIDEO_TYPE = ["video/mp4"];
 
 export const ALLOWED_FILE_TYPES = ["application/pdf"];
+
+export type sendMailQueueData = {
+  title: string;
+  email: string;
+  body: string;
+};
+
+export type sendFCMQueueData = {
+  fcmTokens: string[];
+  messagePayload: MessagingPayload;
+};
+
+export type sqsHandleMessage = (message: Message) => Promise<void | Message>;

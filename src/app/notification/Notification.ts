@@ -2,9 +2,8 @@ import { NotificationTypes } from "@prisma/client";
 import { MessagingPayload } from "firebase-admin/lib/messaging/messaging-api";
 import { PushNotificationChannels } from "../../utils/types";
 import dbConnection from "../providers/db";
-import { defaultMailSendQueue } from "../jobs/DefaultMailSend";
-import { sendPushNotificationQueue } from "../jobs/PushNotificationSend";
 import { sendPushNotificationType } from "../../utils/types";
+import { QueuePushNotificationSend } from "../jobs/PushNotificationSend";
 
 export class Notification {
   public channels: PushNotificationChannels[];
@@ -59,17 +58,19 @@ export class Notification {
         fcmTokens: this.fcmTokens,
         messagePayload: this.messagePayload,
       };
-      sendPushNotificationQueue.add("sendPushNotification", data);
+      await sendSqsMessage(sendPushQueueName, data);
+      await QueuePushNotificationSend(data);
     }
   }
 
   public async sendMailNotification() {
-    const data = {
-      email: this.messagePayload.data?.email,
-      title: this.messagePayload.data?.title,
-      body: this.messagePayload.data?.body,
-    };
-
-    defaultMailSendQueue.add("defaultMailSend", data);
+    if (this.messagePayload.data) {
+      const data = {
+        email: this.messagePayload.data.email,
+        title: this.messagePayload.data.title,
+        body: this.messagePayload.data.body,
+      };
+      await QueuePushNotificationSend(data);
+    }
   }
 }

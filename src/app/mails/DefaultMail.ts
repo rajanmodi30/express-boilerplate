@@ -1,8 +1,11 @@
 import { env } from "../../env";
 import transporter from "../../libs/mail/mail";
+import { sendMailQueueData } from "../../utils/types";
 
-export const sendWithDefaultTemplateEmail = async (job: any): Promise<void> => {
-  const { title, body, email } = job.data;
+export const sendWithDefaultTemplateEmail = async (
+  job: sendMailQueueData
+): Promise<void> => {
+  const { title, body, email } = job;
   try {
     const options = {
       from: env.mail.from_address,

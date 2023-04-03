@@ -44,6 +44,7 @@ export const env = {
     secretAccessKey: getOsEnv("AWS_SECRET_ACCESS_KEY"),
     bucket: getOsEnv("AWS_BUCKET"),
     region: getOsEnv("AWS_DEFAULT_REGION"),
+    accountId: getOsEnv("AWS_ACCOUNT_ID"),
   },
   mail: {
     host: getOsEnv("MAIL_HOST"),

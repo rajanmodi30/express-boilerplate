@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { env } from "../../../../../env";
 import dbConnection from "../../../../providers/db";
 import jwt from "jsonwebtoken";
-import { forgotPasswordEmailQueue } from "../../../../jobs/ForgotMailSend";
 import bcrypt from "bcryptjs";
+import { QueuePushNotificationSend } from "../../../../jobs/PushNotificationSend";
 
 export class ForgotPasswordController {
   public static async forgot(req: Request, res: Response) {
@@ -51,8 +51,9 @@ export class ForgotPasswordController {
       subject,
     };
 
-    forgotPasswordEmailQueue.add("sendForgotPasswordEmail", data);
+    await sendSqsMessage(forgotPasswordQueueName, data);
 
+    await QueuePushNotificationSend(data);
     return res.json({
       status: true,
       message: req.t("user.forgot_password_reset_link"),

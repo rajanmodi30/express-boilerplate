@@ -1,5 +1,4 @@
 import { logger } from "./app/providers/logger";
-import serverAdapter from "./app/providers/queues";
 import { Locale } from "./app/providers/locale";
 import { cron } from "./app/providers/cron";
 import { Server } from "./app/providers/server";
@@ -13,7 +12,7 @@ Promise.all([
   express.initializeApp(),
   express.configureRateLimiter(),
   express.configureLocale(middleware, i18next),
-  express.configureViews(serverAdapter),
+  express.configureViews(),
   express.configureExceptionHandler(),
 ]).then(() => {
   const app = express.app;
