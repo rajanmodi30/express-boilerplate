@@ -4,6 +4,7 @@ import { PushNotificationChannels } from "../../utils/types";
 import dbConnection from "../providers/db";
 import { sendPushNotificationType } from "../../utils/types";
 import { QueuePushNotificationSend } from "../jobs/PushNotificationSend";
+import { QueueEmailNotificationSend } from "../jobs/EmailNotificationSend";
 
 export class Notification {
   public channels: PushNotificationChannels[];
@@ -58,7 +59,6 @@ export class Notification {
         fcmTokens: this.fcmTokens,
         messagePayload: this.messagePayload,
       };
-      await sendSqsMessage(sendPushQueueName, data);
       await QueuePushNotificationSend(data);
     }
   }
@@ -70,7 +70,7 @@ export class Notification {
         title: this.messagePayload.data.title,
         body: this.messagePayload.data.body,
       };
-      await QueuePushNotificationSend(data);
+      await QueueEmailNotificationSend(data);
     }
   }
 }

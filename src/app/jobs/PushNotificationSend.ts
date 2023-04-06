@@ -9,7 +9,6 @@ export const QueuePushNotificationSend = async (data: sendFCMQueueData) => {
 };
 
 export const PushNotificationSend = async (job: sendFCMQueueData) => {
-  console.log("send fcm");
   const push = new PushNotification({ tokens: job.fcmTokens });
   const response = await push.send(job.messagePayload);
   logger.info(

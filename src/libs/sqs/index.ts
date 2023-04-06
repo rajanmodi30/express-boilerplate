@@ -28,7 +28,7 @@ export class Sqs {
     const producer = Producer.create({
       queueUrl,
       region: env.aws.region,
-      sqs: Sqs.client,
+      sqs: this.client,
     });
 
     const message = await producer.send({
