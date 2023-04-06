@@ -1,6 +1,6 @@
 import { Sqs } from "../../libs/sqs";
 import { sendMailQueueData } from "../../utils/types";
-import { MAIL_SEND_QUEUE_NAME, SEND_PUSH_QUEUE_NAME } from "../../utils/utils";
+import { MAIL_SEND_QUEUE_NAME } from "../../utils/utils";
 import { sendWithDefaultTemplateEmail } from "../mails/DefaultMail";
 import { logger } from "../providers/logger";
 
