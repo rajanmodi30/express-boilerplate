@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import { env } from "../../../../../env";
 import dbConnection from "../../../../providers/db";
 import jwt from "jsonwebtoken";
-import { forgotPasswordEmailQueue } from "../../../../jobs/ForgotMailSend";
 import bcrypt from "bcryptjs";
+import { QueuePushNotificationSend } from "../../../../jobs/PushNotificationSend";
+import { Sqs } from "../../../../../libs/sqs";
+import { FORGOT_PASSWORD_QUEUE_NAME } from "../../../../../utils/utils";
 
 export class ForgotPasswordController {
   public static async forgot(req: Request, res: Response) {
@@ -51,7 +53,7 @@ export class ForgotPasswordController {
       subject,
     };
 
-    forgotPasswordEmailQueue.add("sendForgotPasswordEmail", data);
+    await Sqs.publishMessage(FORGOT_PASSWORD_QUEUE_NAME, data);
 
     return res.json({
       status: true,

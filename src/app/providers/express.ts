@@ -43,14 +43,13 @@ export class Express {
     this.app.set("port", port);
   };
 
-  configureViews = (serverAdapter: any) => {
+  configureViews = () => {
     this.app.set("view engine", "hbs");
     this.app.set("views", env.app.root_dir + "/views/");
     if (!env.app.api_only) {
       this.app.use("/", webRouter);
     }
     this.app.use(`/${env.app.api_prefix}`, apiRouter);
-    this.app.use("/queues", serverAdapter.getRouter());
   };
 
   configureLocale = (middleware: any, i18next: any) => {

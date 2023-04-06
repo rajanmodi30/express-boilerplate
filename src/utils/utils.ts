@@ -43,3 +43,9 @@ export const validFileTypes = (type: UPLOAD_TYPES) => {
 };
 
 export const STORAGE_PATH = env.app.root_dir + "/storage/uploads";
+
+export const FORGOT_PASSWORD_QUEUE_NAME = "forgot-password";
+
+export const SEND_PUSH_QUEUE_NAME = "send-push";
+
+export const MAIL_SEND_QUEUE_NAME = "mail-send";

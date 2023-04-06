@@ -48,7 +48,7 @@ Generate controller,routes,request,response,mail and jobs with command
 - [Socket Emitter](https://www.npmjs.com/package/socket.io-emitter)
 - [Node Mailer](https://www.npmjs.com/package/nodemailer)
 - [Firebase Fcm -Admin](https://www.npmjs.com/package/firebase-admin)
-- [Bull Mq & board - for queues](https://www.npmjs.com/package/bullmq)
+- [Aws Sqs for queues management](#)
 - [Cron](https://www.npmjs.com/package/cron)
 - [i18next -localization](https://www.npmjs.com/package/i18next)
 - [Zod- Request Validation](https://github.com/colinhacks/zod)
