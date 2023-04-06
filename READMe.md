@@ -21,7 +21,6 @@ Install on production
   yarn build
 ```
 
-
 ## Features
 
 - Login
@@ -34,7 +33,6 @@ Install on production
 - Notifications
 - Logout
 
-
 ## Auto Generate Code
 
 Generate controller,routes,request,response,mail and jobs with command
@@ -42,21 +40,21 @@ Generate controller,routes,request,response,mail and jobs with command
 ```bash
   yarn make 
 ```
+
 ## Libraries Used
 
- - [Pino - Logger](https://www.npmjs.com/package/pino)
- - [S3 - File Uploads](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/getting-started-nodejs.html)
- - [Socket Emitter](https://www.npmjs.com/package/socket.io-emitter)
- - [Node Mailer](https://www.npmjs.com/package/nodemailer)
- - [Firebase Fcm -Admin](https://www.npmjs.com/package/firebase-admin)
- - [Bull Mq & board - for queues](https://www.npmjs.com/package/bullmq)
- - [Cron](https://www.npmjs.com/package/cron)
- - [i18next -localization](https://www.npmjs.com/package/i18next)
- - [Zod- Request Validation](https://github.com/colinhacks/zod)
- - [Redis](https://www.npmjs.com/package/redis)
- - [Express Rate Limiter](https://www.npmjs.com/package/express-rate-limit)
- - [PRISMA - ORM](https://www.npmjs.com/package/prisma)
-
+- [Pino - Logger](https://www.npmjs.com/package/pino)
+- [S3 - File Uploads](https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/getting-started-nodejs.html)
+- [Socket Emitter](https://www.npmjs.com/package/socket.io-emitter)
+- [Node Mailer](https://www.npmjs.com/package/nodemailer)
+- [Firebase Fcm -Admin](https://www.npmjs.com/package/firebase-admin)
+- [Bull Mq & board - for queues](https://www.npmjs.com/package/bullmq)
+- [Cron](https://www.npmjs.com/package/cron)
+- [i18next -localization](https://www.npmjs.com/package/i18next)
+- [Zod- Request Validation](https://github.com/colinhacks/zod)
+- [Redis](https://www.npmjs.com/package/redis)
+- [Express Rate Limiter](https://www.npmjs.com/package/express-rate-limit)
+- [PRISMA - ORM](https://www.npmjs.com/package/prisma)
 
 ## Tech Stack
 
@@ -64,13 +62,12 @@ Generate controller,routes,request,response,mail and jobs with command
 
 **Server:** Node, Express,Typescript,MySql/PostgreSql
 
+**Dockerd Container** To run mysql/redis/node in isolated separate containers
 
 ## Authors
 
 - [@rajanmodi30](https://github.com/rajanmodi30)
 
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-

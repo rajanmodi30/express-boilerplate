@@ -28,12 +28,11 @@ export const env = {
     forgotPasswordExpiredIn: getOsEnv("JWT_FORGOT_PASSWORD_EXPIRES_IN"),
   },
   redis: {
-    url:
-      getOsEnv("REDIS_USERNAME") || getOsEnv("REDIS_PASSWORD")
-        ? `redis://${getOsEnv("REDIS_USERNAME")}:${getOsEnv(
-            "REDIS_PASSWORD"
-          )}@${getOsEnv("REDIS_HOST")}:${getOsEnv("REDIS_PORT")}`
-        : `redis://${getOsEnv("REDIS_HOST")}:${getOsEnv("REDIS_PORT")}`,
+    url: getOsEnv("REDIS_PASSWORD")
+      ? `redis://${getOsEnv("REDIS_USERNAME") ?? ""}:${getOsEnv(
+          "REDIS_PASSWORD"
+        )}@${getOsEnv("REDIS_HOST")}:${getOsEnv("REDIS_PORT")}`
+      : `redis://${getOsEnv("REDIS_HOST")}:${getOsEnv("REDIS_PORT")}`,
     host: getOsEnv("REDIS_HOST"),
     port: getOsEnv("REDIS_PORT"),
     password: getOsEnv("REDIS_PASSWORD"),
