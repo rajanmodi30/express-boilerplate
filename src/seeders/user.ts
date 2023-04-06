@@ -19,7 +19,7 @@ export const users = async (count: number) => {
   }
   USERS.push({
     firstName: "rajan",
-    lastName: "mode",
+    lastName: "modi",
     email: "rajanmodi30@gmail.com",
     password: bcrypt.hashSync("12345678"),
   });
