@@ -10,6 +10,7 @@ export const queueConnection = {
   connection: {
     host: env.redis.host,
     port: env.redis.port,
+    password: env.redis.password,
   },
 };
 
